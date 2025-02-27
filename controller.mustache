@@ -1,0 +1,49 @@
+package {{packageName}}.controller;
+
+import {{packageName}}.model.{{EntityName}};
+import {{packageName}}.dto.{{EntityName}}DTO;
+import {{packageName}}.service.{{EntityName}}Service;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/{{tableName}}")
+public class {{EntityName}}Controller {
+
+    private final {{EntityName}}Service service;
+
+    public {{EntityName}}Controller({{EntityName}}Service service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public {{EntityName}} create(@RequestBody {{EntityName}}DTO entityDTO) {
+        return service.create(entityDTO);
+    }
+
+    @PutMapping("/{id}")
+    public {{EntityName}} update(@PathVariable Long id, @RequestBody {{EntityName}}DTO entityDTO) {
+        return service.update(id, entityDTO);
+    }
+
+    @GetMapping("/{id}")
+    public String approve(@PathVariable Long id, @RequestParam boolean isApproved) {
+        return service.approve(id, isApproved);
+    }
+
+    @GetMapping("/{id}")
+    public {{EntityName}} getById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+
+    @GetMapping
+    public List<{{EntityName}}> getAll() {
+        return service.getAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
+}

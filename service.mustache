@@ -1,0 +1,15 @@
+package {{packageName}}.service;
+
+import {{packageName}}.model.{{EntityName}};
+import {{packageName}}.dto.{{EntityName}}DTO;
+import java.util.List;
+
+public interface {{EntityName}}Service {
+
+    {{EntityName}} create({{EntityName}}DTO entityDTO);
+    {{EntityName}} update(Long id, {{EntityName}}DTO entityDTO);
+    String approve(Long id, boolean isApproved);
+    {{EntityName}} getById(Long id);
+    List<{{EntityName}}> getAll();
+    void delete(Long id);
+}

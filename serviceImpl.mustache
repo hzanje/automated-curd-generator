@@ -1,0 +1,68 @@
+package {{packageName}}.service.impl;
+
+import {{packageName}}.model.{{EntityName}};
+import {{packageName}}.dto.{{EntityName}}DTO;
+import {{packageName}}.repository.{{EntityName}}Repository;
+import {{packageName}}.service.{{EntityName}}Service;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class {{EntityName}}ServiceImpl implements {{EntityName}}Service {
+
+    private final {{EntityName}}Repository repository;
+    private final {{EntityName}}TempRepository repositoryTemp;
+
+    public {{EntityName}}ServiceImpl({{EntityName}}Repository repository, {{EntityName}}TempRepository repositoryTemp) {
+        this.repository = repository;
+        this.repositoryTemp = repositoryTemp;
+    }
+
+    @Override
+    public {{EntityName}} create({{EntityName}}DTO entityDTO) {
+        // Custom Business Logic Here
+        {{EntityName}} entity = new {{EntityName}}();
+        // Map dto to entity
+        return repository.save(entity);
+    }
+
+    @Override
+    public {{EntityName}} update(Long id, {{EntityName}}DTO entityDTO) {
+        // Custom Business Logic
+        Optional<{{EntityName}}> existing = repository.findById(id);
+        if (existing.isPresent()) {
+            {{EntityName}} entity = existing.get();
+            // Add business logic before updating
+            return repository.update(entity);
+        }
+        return null;
+    }
+
+    @Override
+    public String approve(Long id, boolean isApproved) {
+        Optional<{{EntityName}}Temp> entityTempOptional = repositoryTemp.findById(id);
+        if(isApproved) {
+            // Custom Business Logic for APPROVE Conditions
+            return "Successfully approved";
+        } else {
+            // Custom Business Logic for REJECT Conditions
+            return "Failed to approve";
+        }
+    }
+
+    @Override
+    public {{EntityName}} getById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<{{EntityName}}> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+}
